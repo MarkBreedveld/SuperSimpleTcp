@@ -37,6 +37,17 @@ namespace SuperSimpleTcp
 
         internal CancellationToken Token { get; set; }
 
+        internal int OutstandingJobs => _outstandingJobs;
+
+        internal int SendStarted()
+        {
+           return Interlocked.Increment(ref _outstandingJobs);
+        }
+
+        internal int SendCompleted()
+        {
+           return Interlocked.Decrement(ref _outstandingJobs);
+        }
         #endregion
 
         #region Private-Members
@@ -44,7 +55,8 @@ namespace SuperSimpleTcp
         private TcpClient _tcpClient = null;
         private NetworkStream _networkStream = null;
         private SslStream _sslStream = null;
-        private string _ipPort = null; 
+        private string _ipPort = null;
+        private int _outstandingJobs = 0;
 
         #endregion
 

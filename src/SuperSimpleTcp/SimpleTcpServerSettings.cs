@@ -154,6 +154,8 @@ namespace SuperSimpleTcp
             }
         }
 
+        public int MaxPendingSendTaskPerClient { get; set; } = 200;
+
         #endregion
 
         #region Private-Members
